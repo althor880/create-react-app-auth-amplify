@@ -1,0 +1,41 @@
+# type Blog @model {
+#   id: ID!
+#   name: String!
+#   posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+# }
+
+# type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+#   id: ID!
+#   title: String!
+#   blogID: ID!
+#   blog: Blog @connection(fields: ["blogID"])
+#   comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+# }
+
+# type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+#   id: ID!
+#   postID: ID!
+#   post: Post @connection(fields: ["postID"])
+#   content: String!
+# }
+
+interface Location {
+  id: ID!,
+  address: Address
+}
+
+type House @model implements Location {
+  id: ID!
+  name: String!
+  address: Address
+}
+
+type Address @model {
+  id: ID!
+  location: Location
+  streetAddress: String!
+  streetAddress2: String!
+  city: String!
+  state: String!
+  zipCode: String!
+}
